@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Profile | Jobs</title>
+{% endblock %}
+
+{% block content %}
+    <p class="container mt-5 mb-5" style="color: white">
+        You haven't applied for any jobs yet: <a href="{% url 'application:jobs' %}">Apply?</a>
+    </p>
+{% endblock %}

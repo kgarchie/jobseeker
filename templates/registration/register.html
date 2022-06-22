@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Sign Up</title>
+{% endblock %}
+
+{% block content %}
+    <section class="center-grid">
+        <form class="container" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label" style="color: white">{{ form.username.label_tag }}</label>
+                <input type="text" class="form-control" id="username" name="{{ form.username.html_name }}">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label" style="color: white">{{ form.email.label_tag }}</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                       name="{{ form.email.html_name }}">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label"
+                       style="color: white">{{ form.password.html_name.capitalize }}</label>
+                <input type="password" class="form-control" id="password" name="{{ form.password.html_name }}">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="check">
+                <label class="form-check-label" for="check" style="color: white">I agree to the <a
+                        href="">T&Cs</a></label>
+            </div>
+            <div class="mb-3">
+                {% if form.errors %}
+                    {% for error in form.errors %}
+                        <p class="help is-danger" id="help" style="color: #ea1c1c">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+                {% for field in form %}
+                    {% if field.help_text %}
+                        <small class="help" style="color: white">{{ field.help_text|safe }}</small>
+                    {% endif %}
+                {% endfor %}
+                {% if request.GET.next %}
+                    <input type="hidden" name="next" value="{{ request.GET.next }}">
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'application:login' %}" style="margin-left: 25px">Log In</a>
+        </form>
+    </section>
+{% endblock %}

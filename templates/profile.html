@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Profile</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container-xl px-4 mt-4">
+        <!-- Account page navigation-->
+        <nav class="nav nav-borders">
+            <a class="nav-link active ms-0"
+               href=""
+               target="__blank">Profile</a>
+        </nav>
+        <hr class="mt-0 mb-4">
+        <div class="row">
+            <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">Profile Picture</div>
+                    <form class="card-body text-center" action="{% url 'application:update_pic' %}">
+                        {% csrf_token %}
+                        <!-- Profile picture image-->
+                        <img class="img-account-profile rounded-circle mb-2" {% if db_user.profile_pic %}
+                             src="{{ db_user.profile_pic.url }}" {% else %}
+                             alt="{{ db_user.username.capitalize|make_list|slice:':2'|join:'' }}" {% endif %}>
+                        <!-- Profile picture help block-->
+                        <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                        <!-- Profile picture upload button-->
+                        <input type="file" class="form-control" name="pic">
+                        <button class="btn btn-primary mt-3" type="submit">Upload new image</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">Account Details</div>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'application:profile' %}">
+                            <!-- Form Group (username)-->
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputUsername">Username (how your name will appear to
+                                    other users on the site)</label>
+                                <input class="form-control" id="inputUsername" type="text"
+                                       placeholder="Enter your username" value="{{ user.username }}" name="username">
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="highQ">Highest Academic Qualification</label>
+                                <select name="highQ" id="highQ" class="form-control">
+                                    <option value="{{ db_user.highQ }}" selected="selected"></option>
+                                    <option value="PHD">PHD</option>
+                                    <option value="Degree">Degree</option>
+                                    <option value="Diploma">Diploma</option>
+                                    <option value="Certificate">Certificate</option>
+                                    <option value="High School">High School</option>
+                                </select>
+                            </div>
+                            <!-- Form Row        -->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (organization name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputOrgName">Institution name</label>
+                                    <input class="form-control" id="inputOrgName" type="text"
+                                           placeholder="Enter your organization name" value="{{ db_user.institution }}"
+                                           name="highQ">
+                                </div>
+                                <!-- Form Group (location)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputLocation">Location</label>
+                                    <input class="form-control" id="inputLocation" type="text"
+                                           placeholder="Enter your location" value="{{ db_user.city }}" name="city">
+                                </div>
+                            </div>
+                            <!-- Form Group (email address)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                                <input class="form-control" id="inputEmailAddress" type="email"
+                                       placeholder="Enter your email address" value="{{ user.email }}">
+                            </div>
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (phone number)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputBirthday">Birthday</label>
+                                    <input class="form-control" id="inputBirthday" type="date" name="dob"
+                                           placeholder="Enter your birthday" value="{{ db_user.dob }}">
+                                </div>
+                                <!-- Form Group (birthday)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputBirthday">Graduated</label>
+                                    <input class="form-control" id="inputBirthday" type="date" name="dog"
+                                           placeholder="Enter your graduation date" value="{{ db_user.dog }}">
+                                </div>
+                            </div>
+                            <!-- Save changes button-->
+                            <button class="btn btn-primary" type="submit">Save changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

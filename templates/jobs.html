@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Jobs</title>
+{% endblock %}
+
+{% block content %}
+    <style>
+        .card {
+            border: none;
+            border-radius: 10px
+        }
+    </style>
+
+    <div class="container mt-5 mb-3">
+        <div class="row gap-0">
+            {% for job in jobs %}
+                <a class="col-md-4" style="text-decoration: none; color: inherit" href="{% url 'application:job-details' job.id %}">
+                    <div class="card p-3 mb-2">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="icon"><img src="{% if job.logo %} {{ job.logo.url }} {% endif %}"
+                                                       alt="{{ job.company.capitalize|make_list|slice:':2'|join:'' }}">
+                                </div>
+                                <div class="ms-2 c-details">
+                                    <h6 class="mb-0">{{ job.company }}</h6> <span> {{ job.days }} days ago</span>
+                                </div>
+                            </div>
+                            <div class="badge"><span>{{ job.category }}</span></div>
+                        </div>
+                        <div class="mt-5">
+                            <h3 class="heading">{{ job.title }}<br><small
+                                    style="font-size: large">{{ job.description.capitalize|make_list|slice:':100'|join:'' }}</small>
+                            </h3>
+                            <div class="mt-5">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: calc((({{ job.vacancies }} - {{ job.vacancies }}) / {{ job.vacancies }}) * 100)" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="mt-3"><span class="text1">{{ job.applied }} Applied <span
+                                        class="text2">of {{ job.vacancies }} capacity</span></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+

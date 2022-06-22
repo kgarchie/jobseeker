@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Results</title>
+{% endblock %}
+
+{% block content %}
+    {% if results %}
+        <div class="container mt-5 mb-5" style="width: 50vw">
+            <div class="list-group" id="list">
+                {% for job in results %}
+                    <a href="{% url 'application:job-details' job.id %}" class="list-group-item list-group-item-action"
+                       aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ job.name }}</h5>
+                            <small>{{ job.days }} days ago</small>
+                        </div>
+                        <p class="mb-1" style="color: black">{{ job.description }}</p>
+                        <a href="{% url 'application:job-details' job.id %}" class="btn btn-outline-primary mt-3"
+                           style="width: fit-content;">Details</a>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="container mt-5 mb-5">
+            <p style="color: white">No such jobs were found; <a href="{% url 'application:home' %}">try again</a></p>
+        </div>
+    {% endif %}
+{% endblock %}

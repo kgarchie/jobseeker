@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Application Failed</title>
+{% endblock %}
+
+{% block content %}
+    <section class="container mt-5 mt-5" style="color: white">
+        Application failed, Recheck or update your <a href="{% url 'application:profile' %}">Qualifications</a>
+    </section>
+{% endblock %}

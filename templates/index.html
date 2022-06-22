@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Home</title>
+{% endblock %}
+
+{% block content %}
+    {% load  static %}
+    <section>
+        <div class="hero">
+            <img src="{% static 'images/banners/hero-bg2.jpg' %}" alt="company picture" class="hero-img">
+        </div>
+        <div class="hero-call">
+            <div class="custom-card">
+                <h1>Find the most exciting startup jobs</h1>
+
+                <form method="post" action="{% url 'application:search' %}">
+                    {% csrf_token %}
+                    <div class="custom-row">
+                        <input type="text" placeholder="Job Title or Keyword" name="q-text">
+                        <select name="location" id="location">
+                            {% for job in jobs %}
+                                <option value="{{ job.location }}">{{ job.location }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="browse container-fluid">
+        <div class="custom-btn">
+            <button class="explore custom-explore__btn" href="{% url 'application:jobs' %}">Explore
+                <span class="icon-right"></span>
+                <span
+                        class="icon-right after">
+                </span>
+            </button>
+        </div>
+    </section>
+    <section class="difference">
+        <img src="{% static 'images/banners/cv_bg.jpg' %}" alt="" class="img-cv_bg">
+        <div class="difference-overlay"></div>
+        <div class="upload custom-row__difference">
+            <span style="color: white;">FEATURED TOURS PACKAGES</span>
+            <h1>Make a Difference with Your Online Resume!</h1>
+            <input type="file" class="form-control" id="customFile" style="max-width: 20vw;"/>
+        </div>
+    </section>
+{% endblock %}
