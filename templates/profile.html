@@ -18,7 +18,7 @@
                 <!-- Profile picture card-->
                 <div class="card mb-4 mb-xl-0">
                     <div class="card-header">Profile Picture</div>
-                    <form class="card-body text-center" action="{% url 'application:update_pic' %}">
+                    <form class="card-body text-center" action="{% url 'application:update_pic' %}" method="post">
                         {% csrf_token %}
                         <!-- Profile picture image-->
                         <img class="img-account-profile rounded-circle mb-2" {% if db_user.profile_pic %}
@@ -64,7 +64,7 @@
                                     <label class="small mb-1" for="inputOrgName">Institution name</label>
                                     <input class="form-control" id="inputOrgName" type="text"
                                            placeholder="Enter your organization name" value="{{ db_user.institution }}"
-                                           name="highQ">
+                                           name="institution">
                                 </div>
                                 <!-- Form Group (location)-->
                                 <div class="col-md-6">
@@ -73,19 +73,17 @@
                                            placeholder="Enter your location" value="{{ db_user.city }}" name="city">
                                 </div>
                             </div>
-                            <!-- Form Group (email address)-->
-                            <div class="mb-3">
-                                <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                <input class="form-control" id="inputEmailAddress" type="email"
-                                       placeholder="Enter your email address" value="{{ user.email }}">
-                            </div>
-                            <!-- Form Row-->
+
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (phone number)-->
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                    <input class="form-control" id="inputBirthday" type="date" name="dob"
-                                           placeholder="Enter your birthday" value="{{ db_user.dob }}">
+                                    <label class="small mb-1" for="gender">Gender</label>
+                                    <select name="gender" id="gender" class="form-control">
+                                        <option value="{{ db_user.gender }}" selected="selected"></option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Non-Binary">Non Binary</option>
+                                    </select>
                                 </div>
                                 <!-- Form Group (birthday)-->
                                 <div class="col-md-6">

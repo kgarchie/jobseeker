@@ -39,16 +39,18 @@ def profile(request):
     sys_user = request.user
     form = AdvancedUser()
     if request.method == 'POST':
-        db_user = get_object_or_404(User_data, pk=request.user.id)
-        if form.is_valid():
-            dob = request.POST['dob']
+        db_user = User_data.objects.get_or_create(id=sys_user.id)
+        if db_user:
+            print('Got Em!')
             city = request.POST['city']
             highQ = request.POST['highQ']
             institution = request.POST['institution']
             gender = request.POST['gender']
             dog = request.POST['dog']
+            print(gender)
+
             if db_user is not None:
-                User_data.objects.create(user=request.user, dob=dob, city=city, highQ=highQ, institution=institution,
+                User_data.objects.create(user=request.user, city=city, highQ=highQ, institution=institution,
                                          gender=gender, dog=dog)
                 return render(request, 'profile.html', {'db_user': db_user})
     context = {
@@ -154,6 +156,10 @@ def apply(request, id):
 
 def update_pic(request):
     if request.method == 'POST':
-        user = User_data.objects.get_or_create(user=request.user)
-        user.profile_pic = request.POST['pic']
+        try:
+            user = User_data.objects.get(id=request.user.id)
+            user.profile_pic = request.POST['pic']
+        except Exception:
+            print('Created')
+            User_data.objects.get_or_create(user=request.user, profile_pic=request.POST['pic'])
     return redirect('application:profile')

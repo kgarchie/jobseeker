@@ -20,7 +20,7 @@
                         <div class="d-flex justify-content-between">
                             <div class="d-flex flex-row align-items-center">
                                 <div class="icon"><img src="{% if job.logo %} {{ job.logo.url }} {% endif %}"
-                                                       alt="{{ job.company.capitalize|make_list|slice:':2'|join:'' }}">
+                                                       alt="{{ job.company.capitalize|make_list|slice:':1'|join:'' }}">
                                 </div>
                                 <div class="ms-2 c-details">
                                     <h6 class="mb-0">{{ job.company }}</h6> <span> {{ job.days }} days ago</span>
