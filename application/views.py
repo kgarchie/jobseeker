@@ -49,24 +49,27 @@ def profile(request):
 
 
 def update_details(request):
-    sys_user = request.user
     if request.method == 'POST':
         try:
-            db_user = User_data.objects.get(user=sys_user)
+            db_user = User_data.objects.get(id=request.user.id)
         except Exception as e:
             print(e)
             db_user = None
+
+        city = request.POST['city']
+        highQ = request.POST['highQ']
+        institution = request.POST['institution']
+        gender = request.POST['gender']
+        dog = request.POST['dog']
+
         if db_user is not None:
             print('Got Em!')
-            city = request.POST['city']
-            highQ = request.POST['highQ']
-            institution = request.POST['institution']
-            gender = request.POST['gender']
-            dog = request.POST['dog']
-            print(gender)
+            User_data.objects.update(user=request.user, city=city, highQ=highQ, institution=institution,
+                                     gender=gender, dog=dog)
+        else:
             User_data.objects.create(user=request.user, city=city, highQ=highQ, institution=institution,
                                      gender=gender, dog=dog)
-    return redirect('application:update')
+    return redirect('application:profile')
 
 
 def register(request):
@@ -166,7 +169,7 @@ def apply(request, id):
 def update_pic(request):
     if request.method == 'POST':
         try:
-            user = User_data.objects.get(user=request.user)
+            user = User_data.objects.get(id=request.user.id)
             user.profile_pic = request.POST['pic']
         except Exception as e:
             print('Created')

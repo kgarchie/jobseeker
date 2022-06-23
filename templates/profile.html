@@ -22,7 +22,7 @@
                         {% csrf_token %}
                         <!-- Profile picture image-->
                         <img class="img-account-profile rounded-circle mb-2"
-                                {% if user_data %}
+                                {% if user_data.profile_pic %}
                              src="{{ user_data.profile_pic.url }}"
                              alt="{{ user.username.capitalize|make_list|slice:':2'|join:'' }}"
                                 {% else %}
