@@ -36,11 +36,27 @@ def login_user(request):
 
 @login_required(login_url='application:login')
 def profile(request):
+    try:
+        user_data = User_data.objects.get(user=request.user)
+    except Exception:
+        user_data = None
+    if user_data is not None:
+        context = {
+            'user_data': user_data
+        }
+        return render(request, 'profile.html', context)
+    return render(request, 'profile.html')
+
+
+def update_details(request):
     sys_user = request.user
-    form = AdvancedUser()
     if request.method == 'POST':
-        db_user = User_data.objects.get_or_create(id=sys_user.id)
-        if db_user:
+        try:
+            db_user = User_data.objects.get(user=sys_user)
+        except Exception as e:
+            print(e)
+            db_user = None
+        if db_user is not None:
             print('Got Em!')
             city = request.POST['city']
             highQ = request.POST['highQ']
@@ -48,16 +64,9 @@ def profile(request):
             gender = request.POST['gender']
             dog = request.POST['dog']
             print(gender)
-
-            if db_user is not None:
-                User_data.objects.create(user=request.user, city=city, highQ=highQ, institution=institution,
-                                         gender=gender, dog=dog)
-                return render(request, 'profile.html', {'db_user': db_user})
-    context = {
-        'sys_user': sys_user,
-        'form': form,
-    }
-    return render(request, 'profile.html', context)
+            User_data.objects.create(user=request.user, city=city, highQ=highQ, institution=institution,
+                                     gender=gender, dog=dog)
+    return redirect('application:update')
 
 
 def register(request):
@@ -157,9 +166,10 @@ def apply(request, id):
 def update_pic(request):
     if request.method == 'POST':
         try:
-            user = User_data.objects.get(id=request.user.id)
+            user = User_data.objects.get(user=request.user)
             user.profile_pic = request.POST['pic']
-        except Exception:
+        except Exception as e:
             print('Created')
-            User_data.objects.get_or_create(user=request.user, profile_pic=request.POST['pic'])
+            print(e)
+            User_data.objects.create(user=request.user, profile_pic=request.POST['pic'])
     return redirect('application:profile')

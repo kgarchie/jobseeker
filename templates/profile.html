@@ -21,9 +21,15 @@
                     <form class="card-body text-center" action="{% url 'application:update_pic' %}" method="post">
                         {% csrf_token %}
                         <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2" {% if db_user.profile_pic %}
-                             src="{{ db_user.profile_pic.url }}" {% else %}
-                             alt="{{ db_user.username.capitalize|make_list|slice:':2'|join:'' }}" {% endif %}>
+                        <img class="img-account-profile rounded-circle mb-2"
+                                {% if user_data %}
+                             src="{{ user_data.profile_pic.url }}"
+                             alt="{{ user.username.capitalize|make_list|slice:':2'|join:'' }}"
+                                {% else %}
+                                    {% load static %}
+                             src="{% static 'images/misc/generic-profile.webp' %}"
+                             alt="Image"
+                                {% endif %} style="width:150px; height: 150px; object-fit: contain;">
                         <!-- Profile picture help block-->
                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                         <!-- Profile picture upload button-->
@@ -37,7 +43,7 @@
                 <div class="card mb-4">
                     <div class="card-header">Account Details</div>
                     <div class="card-body">
-                        <form method="post" action="{% url 'application:profile' %}">
+                        <form method="post" action="{% url 'application:update' %}">
                             <!-- Form Group (username)-->
                             {% csrf_token %}
                             <div class="mb-3">
@@ -49,7 +55,7 @@
                             <div class="mb-3">
                                 <label class="small mb-1" for="highQ">Highest Academic Qualification</label>
                                 <select name="highQ" id="highQ" class="form-control">
-                                    <option value="{{ db_user.highQ }}" selected="selected"></option>
+                                    <option value="{{ user_data.highQ }}" selected="selected"></option>
                                     <option value="PHD">PHD</option>
                                     <option value="Degree">Degree</option>
                                     <option value="Diploma">Diploma</option>
@@ -63,14 +69,15 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputOrgName">Institution name</label>
                                     <input class="form-control" id="inputOrgName" type="text"
-                                           placeholder="Enter your organization name" value="{{ db_user.institution }}"
+                                           placeholder="Enter your organization name"
+                                           value="{{ user_data.institution }}"
                                            name="institution">
                                 </div>
                                 <!-- Form Group (location)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputLocation">Location</label>
                                     <input class="form-control" id="inputLocation" type="text"
-                                           placeholder="Enter your location" value="{{ db_user.city }}" name="city">
+                                           placeholder="Enter your location" value="{{ user_data.city }}" name="city">
                                 </div>
                             </div>
 
@@ -79,7 +86,7 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="gender">Gender</label>
                                     <select name="gender" id="gender" class="form-control">
-                                        <option value="{{ db_user.gender }}" selected="selected"></option>
+                                        <option value="{{ user_data.gender }}" selected="selected"></option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                         <option value="Non-Binary">Non Binary</option>
@@ -89,7 +96,7 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputBirthday">Graduated</label>
                                     <input class="form-control" id="inputBirthday" type="date" name="dog"
-                                           placeholder="Enter your graduation date" value="{{ db_user.dog }}">
+                                           placeholder="Enter your graduation date" value="{{ user_data.dog }}">
                                 </div>
                             </div>
                             <!-- Save changes button-->
