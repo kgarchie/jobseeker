@@ -76,10 +76,9 @@
         <div class="col-md-6 col-sm-12">
             <h5>Navigation</h5>
             <ul class="nav flex-column">
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Home</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0">Affiliates</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0">FAQs</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0">About</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'application:home' %}" class="nav-link p-0">Home</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'application:jobs' %}" class="nav-link p-0">All Available Jobs</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'application:about' %}" class="nav-link p-0">About</a></li>
             </ul>
         </div>
 
