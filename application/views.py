@@ -181,6 +181,7 @@ def apply(request, id):
                 user_jobs.save()
                 selected_job.applied = selected_job.applied + 1
                 selected_job.vacancies = selected_job.vacancies - 1
+                selected_job.save()
                 if 'next' in request.POST:
                     return redirect(request.POST['next'])
                 return render(request, 'success.html')
@@ -204,6 +205,7 @@ def update_pic(request):
     return redirect('application:profile')
 
 
+@login_required(login_url='application:login')
 def upload_cv(request):
     if request.method == 'POST':
         try:
