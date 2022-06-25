@@ -6,12 +6,12 @@
 
 {% block content %}
     <section class="container mt-5 mb-5" style="color: white">
-        <p>Successfully Applied For The Job</p>
+        <p>Successfully Updated Profile</p>
         <p>You will be redirected automatically</p>
     </section>
     <script>
         setTimeout(function () {
-            window.location.href = '{% url "application:applied" %}';
-        }, 3000);
+            window.location.href = '{% url "application:profile" %}';
+        }, 2500);
     </script>
 {% endblock %}

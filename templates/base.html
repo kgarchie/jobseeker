@@ -42,6 +42,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'application:profile' %}">Profile</a>
                 </li>
+                {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'application:filters' %}">User Applications</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
@@ -77,7 +82,8 @@
             <h5>Navigation</h5>
             <ul class="nav flex-column">
                 <li class="nav-item mb-2"><a href="{% url 'application:home' %}" class="nav-link p-0">Home</a></li>
-                <li class="nav-item mb-2"><a href="{% url 'application:jobs' %}" class="nav-link p-0">All Available Jobs</a></li>
+                <li class="nav-item mb-2"><a href="{% url 'application:jobs' %}" class="nav-link p-0">All Available
+                    Jobs</a></li>
                 <li class="nav-item mb-2"><a href="{% url 'application:about' %}" class="nav-link p-0">About</a></li>
             </ul>
         </div>

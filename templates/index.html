@@ -45,7 +45,11 @@
         <div class="upload custom-row__difference">
             <span style="color: white;">FEATURED TOURS PACKAGES</span>
             <h1>Make a Difference with Your Online Resume!</h1>
-            <input type="file" class="form-control" id="customFile" style="max-width: 20vw;"/>
+            <form action="{% url 'application:cv' %}" style="display: flex; flex-direction: column; align-items: center; gap: 1rem;" method="post">
+                {% csrf_token %}
+                <input type="file" class="form-control" id="customFile" style="max-width: 20vw;" name="cv">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
         </div>
     </section>
 {% endblock %}

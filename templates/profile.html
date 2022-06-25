@@ -55,7 +55,8 @@
                             <div class="mb-3">
                                 <label class="small mb-1" for="highQ">Highest Academic Qualification</label>
                                 <select name="highQ" id="highQ" class="form-control">
-                                    <option value="{{ user_data.highQ }}" selected="selected"></option>
+                                    <option value="{{ user_data.highQ }}"
+                                            selected="selected">{{ user_data.highQ }}</option>
                                     <option value="PHD">PHD</option>
                                     <option value="Degree">Degree</option>
                                     <option value="Diploma">Diploma</option>
@@ -82,21 +83,34 @@
                             </div>
 
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (phone number)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="gender">Gender</label>
                                     <select name="gender" id="gender" class="form-control">
-                                        <option value="{{ user_data.gender }}" selected="selected"></option>
+                                        <option value="{{ user_data.gender }}"
+                                                selected="selected">{{ user_data.gender }}</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                         <option value="Non-Binary">Non Binary</option>
                                     </select>
                                 </div>
-                                <!-- Form Group (birthday)-->
+
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputBirthday">Graduated</label>
-                                    <input class="form-control" id="inputBirthday" type="date" name="dog"
-                                           placeholder="Enter your graduation date" {% if user_data.dog %} value="{{ user_data.dog }}" {% else %} id="datePicker" {% endif %}>
+                                    <label class="small mb-1" for="gradPicker">Graduated</label>
+                                    <input class="form-control" type="date" name="dog" id="gradPicker">
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="dobPicker">Date of Birth</label>
+                                    <input class="form-control" type="date" name="dob" id="dobPicker">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="cv">CV</label>
+                                    <input class="form-control" type="file" name="cv" id="cv">
+                                    {% if user_data.cv %}
+                                        <small>Currently
+                                        <a href="{{ user_data.cv.url }}" target="_blank">{{ user_data.cv.name }}</a></small>
+                                    {% endif %}
                                 </div>
                             </div>
                             <!-- Save changes button-->
@@ -113,6 +127,18 @@
             local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
             return local.toJSON().slice(0, 10);
         });
-        document.getElementById('datePicker').value = new Date().toDateInputValue()
+        {% if user_data_dog %}
+            const db_dog = "{{ user_data_dog }}";
+            document.getElementById('gradPicker').value = db_dog;
+        {% else %}
+            document.getElementById('gradPicker').value = new Date().toDateInputValue();
+        {% endif %}
+
+        {% if user_data_dob %}
+            const db_dob = "{{ user_data_dob }}";
+            document.getElementById('dobPicker').value = db_dob;
+        {% else %}
+            document.getElementById('dobPicker').value = new Date().toDateInputValue();
+        {% endif %}
     </script>
 {% endblock %}

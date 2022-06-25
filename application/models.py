@@ -65,7 +65,8 @@ class User_data(models.Model):
                               choices=GENDER,
                               default='Nairobi', blank=True, null=True)
     dog = models.DateField(blank=True, null=True)
-    profile_pic = models.FileField(blank=True, null=True)
+    profile_pic = models.FileField(blank=True, null=True, upload_to='pics/')
+    cv = models.FileField(blank=True, null=True, upload_to='docs/')
 
     class Meta:
         verbose_name_plural = "User Data"
@@ -73,10 +74,23 @@ class User_data(models.Model):
     def __str__(self):
         return self.user.username
 
+    @property
+    def user_gender(self):
+        return self.gender
+
 
 class UserJobs(models.Model):
     user = models.ForeignKey(User_data, on_delete=models.CASCADE)
     job = models.ManyToManyField(Jobs)
 
+    class Meta:
+        verbose_name_plural = "User Jobs"
+
     def __str__(self):
         return self.user.user.username
+
+    def get_num_of_jobs(self):
+        return self.job.all().count()
+
+    def get_all_user_jobs(self):
+        return self.job.all()

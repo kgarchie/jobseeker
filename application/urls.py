@@ -19,6 +19,10 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('update-details/', views.update_details, name='update'),
     path('profile/applied/', views.applied_jobs, name='applied'),
+    path('upload-cv/', views.upload_cv, name='cv'),
 
     path('about/', views.about, name='about'),
+
+    path('users/', views.all_users, name='users'),
+    path('users/filters/', views.filters, name='filters'),
 ]

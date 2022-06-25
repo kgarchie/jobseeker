@@ -93,9 +93,9 @@
                      class="edit">
                 <div class="description" spellcheck="false">{{ job.description }}</div>
                 <br>
-                <form class="apply" action="{% url 'application:apply' job.id %}">
+                <form class="apply" action="{% url 'application:apply' job.id %}" method="post">
                     {% csrf_token %}
-                    <button class="btn btn-outline-success">Apply</button>
+                    <button class="btn btn-outline-success" type="submit">Apply</button>
                     {% if request.GET.next %}
                         <input type="hidden" name="next" value="{{ request.GET.next }}">
                     {% endif %}
