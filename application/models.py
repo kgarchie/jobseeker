@@ -40,7 +40,7 @@ class Jobs(models.Model):
                               default='Monthly')
     qualifications = models.CharField(max_length=20, choices=EDUCATION, default='Degree')
     applied = models.IntegerField(default=0)
-    date_posted = models.DateField(default=datetime.date.today())
+    date_posted = models.DateField(auto_now_add=True)
 
     class Meta:
         verbose_name_plural = "Jobs"
